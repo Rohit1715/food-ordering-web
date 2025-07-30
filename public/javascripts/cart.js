@@ -70,6 +70,16 @@ function addToCart(item_id) {
         body: JSON.stringify({ cart })
       }).then(() => {
         updateCartCountFromBackend();
+        // Show success toast
+        var toast = document.getElementById('cart-toast');
+        if (toast) {
+          toast.style.display = 'block';
+          toast.style.opacity = '1';
+          setTimeout(function() {
+            toast.style.opacity = '0';
+            setTimeout(function(){ toast.style.display = 'none'; toast.style.opacity = '1'; }, 300);
+          }, 1500);
+        }
       });
     });
 }

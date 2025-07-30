@@ -56,10 +56,9 @@
                             </form>
                             </a>
                             <a href="/logout" class="header-username" style="color: #ff8243;" title="Click To Log-Out">
-                                <b><i>
-                                        <%= username %>
-                                    </i></b>
+                                <b><i><%= username %></i></b>
                             </a>
+                            <div id="admin-toast" style="position:absolute; top:48px; right:0; background:#28a745; color:#fff; padding:8px 18px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.10); font-size:15px; z-index:1100; display:none; min-width:160px; text-align:center; pointer-events:none;">Order dispatched!</div>
                         </div>
                     </div>
                 </div>
@@ -233,8 +232,22 @@
                 method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
                     order_id_s: order_id
                 })
+            }).then(() => {
+                showAdminToast('Order dispatched!');
+                setTimeout(function(){ window.location.href = "http://localhost:3000/admin_view_dispatch_orders"; }, 1600);
             });
-            window.location.href = "http://localhost:3000/admin_view_dispatch_orders";
+        }
+        function showAdminToast(msg) {
+            var toast = document.getElementById('admin-toast');
+            if (toast) {
+                toast.textContent = msg;
+                toast.style.display = 'block';
+                toast.style.opacity = '1';
+                setTimeout(function() {
+                    toast.style.opacity = '0';
+                    setTimeout(function(){ toast.style.display = 'none'; toast.style.opacity = '1'; }, 300);
+                }, 1500);
+            }
         }
     </script>
     <!-- jquery  -->

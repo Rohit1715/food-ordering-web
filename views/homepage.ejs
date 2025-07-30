@@ -17,6 +17,29 @@
     <link rel="stylesheet" href="/stylesheets/jquery.fancybox.min.css">
     <!-- custom css  -->
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <style>
+    #menu-search-dropdown {
+        position: absolute;
+        top: 40px;
+        left: 0;
+        width: 100%;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        z-index: 1000;
+        border-radius: 8px;
+        display: none;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+    .search-result-item {
+        padding: 8px 16px;
+        cursor: pointer;
+        border-bottom: 1px solid #eee;
+    }
+    .search-result-item:last-child {
+        border-bottom: none;
+    }
+    </style>
 </head>
 
 <body class="body-fixed">
@@ -44,16 +67,18 @@
                             </ul>
                         </nav>
                         <div class="header-right">
-                            <form action="#" class="header-search-form for-des">
-                                <input type="search" class="form-input" placeholder="Search Here...">
-                                <button type="submit">
+                            <form id="menu-search-form" class="header-search-form for-des" onsubmit="return false;">
+                                <input type="search" class="form-input" id="menu-search-input" placeholder="Search menu..." autocomplete="off">
+                                <button type="submit" tabindex="-1" style="pointer-events:none;">
                                     <i class="uil uil-search"></i>
                                 </button>
+                                <div id="menu-search-dropdown" style="display:none; position:absolute; top:40px; left:0; width:100%; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.15); z-index:1000; border-radius:8px;"></div>
                             </form>
                             <a onClick="openMyCart()" class="header-btn header-cart">
                                 <i class="uil uil-shopping-bag"></i>
                                 <span class="cart-number" id="cart-number-count">0</span>
                             </a>
+                            <div id="cart-toast" style="position:absolute; top:48px; right:0; background:#28a745; color:#fff; padding:8px 18px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.10); font-size:15px; z-index:1100; display:none; min-width:160px; text-align:center; pointer-events:none;">Item added to cart!</div>
                             <div class="dropdown">
                                 <label><button type="button" class="header-username user-dropdown-toggle" style="color: #ff8243; padding: 4px 8px;"><b><i><%= username %></i></b></button></label>
                                 <div class="dropdown-content user-dropdown-menu">
@@ -100,7 +125,7 @@
                         </div>
                         <div class="banner-img-text mt-4 m-auto">
                             <h5 class="h5-title">Orange Mojito</h5>
-                            <p>this is Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                            <p>Enjoy our refreshing Orange Mojito, crafted with fresh oranges and mint for a perfect start to your meal!</p>
                         </div>
                     </div>
                 </div>
@@ -116,11 +141,11 @@
                 <div class="col-lg-12">
                     <div class="sec-title text-center mb-5">
                         <p class="sec-sub-title mb-3">About Us</p>
-                        <h2 class="h2-title">Discover our <span>restaurant story</span></h2>
+                        <h2 class="h2-title">Discover Our Story</h2>
                         <div class="sec-title-shape mb-4">
                             <img src="/images/title-shape.svg" alt="">
                         </div>
-                        <p>This is Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe dolore at aspernatur eveniet temporibus placeat voluptatum quaerat accusamus possimus cupiditate, quidem impedit sed libero id perspiciatis esse earum repellat quam. Dolore modi temporibus quae possimus accusantium, cum corrupti sed deserunt iusto at sapiente nihil sint iste similique soluta dolor! Quod.</p>
+                        <p>At Hungry To Eat, we believe every meal should be a celebration of flavor and freshness. Our chefs use only the finest ingredients to create dishes that delight your senses and satisfy your cravings. Whether you're here for a hearty breakfast, a delicious lunch, a cozy dinner, or a sweet treat, our menu is designed to offer something special for everyone. Experience warm hospitality, vibrant atmosphere, and unforgettable food every time you visit.</p>
                     </div>
                 </div>
             </div>
@@ -261,7 +286,7 @@
                                     </div>
                                     <div class="testimonials-box-text">
                                         <h3 class="h3-title">Nilay Hirpara</h3>
-                                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque, quisquam.</p>
+                                        <p>“The food is always fresh and the service is fantastic. Highly recommended!”</p>
                                     </div>
                                 </div>
                             </div>
@@ -277,7 +302,7 @@
                                     </div>
                                     <div class="testimonials-box-text">
                                         <h3 class="h3-title">Ravi Kumawat</h3>
-                                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque, quisquam.</p>
+                                        <p>“A wonderful place for family dinners. The menu has great variety and everything tastes amazing.”</p>
                                     </div>
                                 </div>
                             </div>
@@ -293,7 +318,7 @@
                                     </div>
                                     <div class="testimonials-box-text">
                                         <h3 class="h3-title">Navnit Kumar</h3>
-                                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque, quisquam.</p>
+                                        <p>“I love the desserts here! The staff is friendly and the ambiance is perfect.”</p>
                                     </div>
                                 </div>
                             </div>
@@ -309,7 +334,7 @@
                                     </div>
                                     <div class="testimonials-box-text">
                                         <h3 class="h3-title">Somyadeep Bhowmik</h3>
-                                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque, quisquam.</p>
+                                        <p>“Best restaurant in town for fresh and healthy meals. Will definitely come back!”</p>
                                     </div>
                                 </div>
                             </div>
@@ -373,60 +398,40 @@
                     </div>
                 </div>
                 <div class="menu-list-row">
-                    <div class="row g-xxl-5 bydefault_show" id="menu-dish"
-                        style="background-image: url(/images/menu-bg.png);">
+                    <div class="row g-xxl-5 bydefault_show" id="menu-dish" style="background-image: url(/images/menu-bg.png);">
                         <% for(let i=0;i<items.length;i++) { %>
-                            <div class="col-lg-4 col-sm-6 dish-box-wp <%= items[i].item_category %>"
-                                data-cat="breakfast">
-                                <div class="dish-box text-center">
-                                    <div class="dist-img">
-                                        <img src="/images/dish/<%= items[i].item_img %>"
-                                            alt="<%= items[i].item_name %>">
-                                    </div>
-                                    <div class="dish-rating">
-                                        <%= items[i].item_rating %>
-                                            <i class="uil uil-star"></i>
-                                    </div>
-                                    <div class="dish-title">
-                                        <h3 class="h3-title">
-                                            <%= items[i].item_name %>
-                                        </h3>
-                                        <p>
-                                            <%= items[i].item_calories %>
-                                        </p>
-                                    </div>
-                                    <div class="dish-info">
-                                        <ul>
-                                            <li>
-                                                <p>Type</p>
-                                                <b>
-                                                    <%= items[i].item_type %>
-                                                </b>
-                                            </li>
-                                            <li>
-                                                <p>Persons</p>
-                                                <b>
-                                                    <%= items[i].item_serving %>
-                                                </b>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="dist-bottom-row">
-                                        <ul>
-                                            <li>
-                                                <b>₹ <%= items[i].item_price %></b>
-                                            </li>
-                                            <li>
-                                                <button class="dish-add-btn" id="btn<%= items[i].item_id %>"
-                                                    onclick="addToCart('<%= items[i].item_id %>')">
-                                                    <i class="uil uil-plus"></i>
-                                                </button>
-                                            </li>
-                                        </ul>
-                                    </div>
+                        <div class="col-lg-4 col-sm-6 dish-box-wp <%= items[i].item_category %>" data-cat="<%= items[i].item_category %>" data-item-id="<%= items[i].item_id %>">
+                            <div class="dish-box text-center">
+                                <div class="dist-img">
+                                    <img src="/images/dish/<%= items[i].item_img %>" alt="<%= items[i].item_name %>">
+                                </div>
+                                <div class="dish-rating">
+                                    <%= items[i].item_rating %>
+                                    <i class="uil uil-star"></i>
+                                </div>
+                                <div class="dish-title">
+                                    <h3 class="h3-title"><%= items[i].item_name %></h3>
+                                    <p><%= items[i].item_calories %></p>
+                                </div>
+                                <div class="dish-info">
+                                    <ul>
+                                        <li><p>Type</p><b><%= items[i].item_type %></b></li>
+                                        <li><p>Persons</p><b><%= items[i].item_serving %></b></li>
+                                    </ul>
+                                </div>
+                                <div class="dist-bottom-row">
+                                    <ul>
+                                        <li><b>₹ <%= items[i].item_price %></b></li>
+                                        <li>
+                                            <button class="dish-add-btn" id="btn<%= items[i].item_id %>" onclick="addToCart('<%= items[i].item_id %>')">
+                                                <i class="uil uil-plus"></i>
+                                            </button>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
-                            <% } %>
+                        </div>
+                        <% } %>
                     </div>
                 </div>
             </div>
@@ -521,7 +526,7 @@
     <script src="/javascripts/jquery.mixitup.min.js"></script>
 
     <!-- fancy box  -->
-    <script src="/javascripts/query.fancybox.min.js"></script>
+    <script src="/javascripts/jquery.fancybox.min.js"></script>
 
     <!-- parallax  -->
     <script src="/javascripts/parallax.min.js"></script>
@@ -540,7 +545,60 @@
     <script src="/javascripts/smooth-scroll.js"></script>
     <!-- custom js  -->
     <script src="/javascripts/main.js"></script>
+    <script src="/javascripts/search.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('menu-search-input');
+        const dropdown = document.getElementById('menu-search-dropdown');
+        searchInput.addEventListener('input', function(e) {
+            const q = searchInput.value.trim();
+            if (!q) { dropdown.style.display = 'none'; dropdown.innerHTML = ''; return; }
+            fetch('/search?q=' + encodeURIComponent(q))
+                .then(res => res.json())
+                .then(data => {
+                    if (!data.length) { dropdown.style.display = 'none'; dropdown.innerHTML = ''; return; }
+                    let html = '<div style="padding:8px 16px; font-weight:bold;">Menu Items</div>';
+                    data.forEach(function(item){
+                        html += `<div class="search-result-item" data-item-id="${item.item_id}">
+                            ${item.item_name} <span style="color:orange; font-size:13px;">(${item.item_category})</span>
+                        </div>`;
+                    });
+                    dropdown.innerHTML = html;
+                    dropdown.style.display = 'block';
+                });
+        });
+        // Dropdown click: scroll and highlight menu item
+        dropdown.addEventListener('mousedown', function(e) {
+            const target = e.target.closest('.search-result-item');
+            if (target && target.dataset.itemId) {
+                const id = target.dataset.itemId;
+                searchInput.value = '';
+                dropdown.style.display = 'none';
+                // Remove highlight from all menu items
+                document.querySelectorAll('.dish-box-wp').forEach(function(el){ el.classList.remove('search-highlight'); });
+                // Find the actual menu item in the menu section
+                var menuItem = document.querySelector('.dish-box-wp[data-item-id="'+id+'"]');
+                if (menuItem) {
+                    menuItem.scrollIntoView({behavior:'smooth', block:'center'});
+                    menuItem.classList.add('search-highlight');
+                    setTimeout(function(){ menuItem.classList.remove('search-highlight'); }, 3000);
+                }
+            }
+        });
+        // Hide dropdown if clicking outside
+        document.addEventListener('mousedown', function(e){
+            if (!dropdown.contains(e.target) && e.target !== searchInput) {
+                dropdown.style.display = 'none';
+            }
+        });
+    });
+    </script>
     <script src="/javascripts/cart.js"></script>
+    <style>
+    #cart-toast {
+        transition: opacity 0.3s;
+    }
+    </style>
 
     </div>
     </div>

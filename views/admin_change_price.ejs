@@ -45,10 +45,9 @@
                         </nav>
                         <div class="header-right">
                             <a href="/logout" class="header-username" style="color: #ff8243;" title="Click To Log-Out">
-                                <b><i>
-                                        <%= username %>
-                                    </i></b>
+                                <b><i><%= username %></i></b>
                             </a>
+                            <div id="admin-toast" style="position:absolute; top:48px; right:0; background:#ffc107; color:#222; padding:8px 18px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.10); font-size:15px; z-index:1100; display:none; min-width:160px; text-align:center; pointer-events:none;">Price changed!</div>
                         </div>
                     </div>
                 </div>
@@ -205,6 +204,22 @@
     <script src="/javascripts/smooth-scroll.js"></script>
     <!-- custom js  -->
     <script src="/javascripts/main.js"></script>
+    <script>
+    // Show toast after successful price change (call this after backend POST success)
+    function showAdminToast(msg) {
+        var toast = document.getElementById('admin-toast');
+        if (toast) {
+            toast.textContent = msg;
+            toast.style.display = 'block';
+            toast.style.opacity = '1';
+            setTimeout(function() {
+                toast.style.opacity = '0';
+                setTimeout(function(){ toast.style.display = 'none'; toast.style.opacity = '1'; }, 300);
+            }, 1500);
+        }
+    }
+    // Example usage: showAdminToast('Price changed!');
+    </script>
 
 
     </div>

@@ -425,6 +425,7 @@ function renderMyOrdersPage(req, res) {
           "SELECT order_dispatch.order_id, order_dispatch.user_id, order_dispatch.quantity, order_dispatch.price, order_dispatch.datetime, menu.item_id, menu.item_name, menu.item_img FROM order_dispatch, menu WHERE order_dispatch.user_id = ? AND menu.item_id = order_dispatch.item_id ORDER BY order_dispatch.datetime DESC",
           [userId],
           function (error, results) {
+
             if (!error) {
               res.render("myorders", {
                 userDetails: resultUser,
@@ -803,5 +804,19 @@ function logout(req, res) {
   res.clearCookie();
   return res.redirect("/signin");
 }
+
+// Search route for AJAX menu search (top-level, not inside any function)
+app.get('/search', function(req, res) {
+  const q = req.query.q ? req.query.q.trim() : '';
+  if (!q) return res.json([]);
+  connection.query(
+    "SELECT * FROM menu WHERE item_name LIKE ? OR item_category LIKE ? OR item_type LIKE ?",
+    [`%${q}%`, `%${q}%`, `%${q}%`],
+    function(error, results) {
+      if (error) return res.status(500).json([]);
+      res.json(results);
+    }
+  );
+});
 
 module.exports = app;

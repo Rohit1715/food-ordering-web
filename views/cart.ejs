@@ -127,6 +127,10 @@
                 <% let item = items[i]; %>
                 <% let subtotal = item.item_price * item.quantity; %>
                 <% total_price += subtotal; total_qty += item.quantity; %>
+                <!-- Hidden fields for each item -->
+                <input type="hidden" name="itemid" value="<%= item.item_id %>">
+                <input type="hidden" name="quantity" value="<%= item.quantity %>">
+                <input type="hidden" name="subprice" value="<%= item.item_price %>">
                 <tr>
                     <td><%= i + 1 %></td>
                     <td><img src="/images/dish/<%= item.item_img %>" alt="" style="border-radius: 10%; border: 2px solid rgb(68,66,66); box-shadow: 4px 4px 8px black;"></td>

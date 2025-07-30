@@ -1,10 +1,9 @@
-CREATE DATABASE  IF NOT EXISTS `foodorderingwesitedb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE IF NOT EXISTS `foodorderingwesitedb` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE `foodorderingwesitedb`;
 -- MySQL dump 10.13  Distrib 8.0.25, for Win64 (x86_64)
 --
 -- Host: localhost    Database: foodorderingwesitedb
 -- ------------------------------------------------------
--- Server version	8.0.25
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -31,7 +30,7 @@ CREATE TABLE `admin` (
   `admin_password` varchar(45) NOT NULL,
   `admin_mobile` varchar(45) NOT NULL,
   PRIMARY KEY (`admin_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +39,7 @@ CREATE TABLE `admin` (
 
 LOCK TABLES `admin` WRITE;
 /*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-INSERT INTO `admin` VALUES (1,'admin_fury','admin_fury@gmail.com','123456789','7563259210');
+INSERT INTO `admin` VALUES (1,'admin_fury','admin@gmail.com','123456789','7563259210');
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -62,7 +61,7 @@ CREATE TABLE `menu` (
   `item_rating` varchar(45) NOT NULL,
   `item_img` varchar(255) NOT NULL,
   PRIMARY KEY (`item_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -90,7 +89,7 @@ CREATE TABLE `order_dispatch` (
   `price` int NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`order_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -99,7 +98,7 @@ CREATE TABLE `order_dispatch` (
 
 LOCK TABLES `order_dispatch` WRITE;
 /*!40000 ALTER TABLE `order_dispatch` DISABLE KEYS */;
-INSERT INTO `order_dispatch` VALUES ('01434da8-d937-41e7-a763-c3521fd33d7c',2,6,1,200,'2022-06-24 15:34:11'),('9c059a01-adda-47e8-aefa-464f81e8842a',2,13,1,60,'2022-06-24 15:46:55');
+INSERT INTO `order_dispatch` VALUES ('01434da8-d937-41e7-a763-c3521fd33d7c',2,6,1,200,'2025-06-24 15:34:11'),('9c059a01-adda-47e8-aefa-464f81e8842a',2,13,1,60,'2025-06-24 15:46:55');
 /*!40000 ALTER TABLE `order_dispatch` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -118,7 +117,7 @@ CREATE TABLE `orders` (
   `price` int NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`order_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,7 +126,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES ('70350c30-73ff-4968-b3dc-92910f498bfd',2,6,1,200,'2022-06-24 15:42:16'),('88cec9b5-6281-4cf5-b280-221672c696a0',2,9,1,200,'2022-06-24 13:17:46'),('d6d48ec1-ab9b-4007-bd0e-44f681681c3d',2,6,1,200,'2022-06-24 13:21:37');
+INSERT INTO `orders` VALUES ('70350c30-73ff-4968-b3dc-92910f498bfd',2,6,1,200,'2025-06-24 15:42:16'),('88cec9b5-6281-4cf5-b280-221672c696a0',2,9,1,200,'2025-06-24 13:17:46'),('d6d48ec1-ab9b-4007-bd0e-44f681681c3d',2,6,1,200,'2025-06-24 13:21:37');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -146,7 +145,7 @@ CREATE TABLE `users` (
   `user_password` varchar(1000) NOT NULL,
   `user_mobileno` varchar(45) NOT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -168,4 +167,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-24 17:02:16
+-- Dump completed on 2025-06-24 17:02:16
