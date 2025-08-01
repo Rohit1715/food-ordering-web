@@ -227,14 +227,14 @@
         }
 
         function dispatching() {
-            let url = "http://localhost:3000/admin_view_dispatch_orders";
+            let url = "/admin_view_dispatch_orders";
             fetch(url, {
                 method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
                     order_id_s: order_id
                 })
             }).then(() => {
                 showAdminToast('Order dispatched!');
-                setTimeout(function(){ window.location.href = "http://localhost:3000/admin_view_dispatch_orders"; }, 1600);
+                setTimeout(function(){ window.location.href = "/admin_view_dispatch_orders"; }, 1600);
             });
         }
         function showAdminToast(msg) {
@@ -266,7 +266,7 @@
     <script src="/javascripts/jquery.mixitup.min.js"></script>
 
     <!-- fancy box  -->
-    <script src="/javascripts/query.fancybox.min.js"></script>
+    <script src="/javascripts/jquery.fancybox.min.js"></script>
 
     <!-- parallax  -->
     <script src="/javascripts/parallax.min.js"></script>
