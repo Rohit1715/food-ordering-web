@@ -1,4 +1,4 @@
-const mysql = require('mysql');
+const mysql = require('mysql2');
 
 // Debug: Log environment variables
 console.log('🔍 Environment Variables Debug:');
