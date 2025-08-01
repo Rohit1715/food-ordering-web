@@ -64,21 +64,8 @@ app.use(session({
   cookie: { maxAge: 1000 * 60 * 60 * 24 },
 }));
 
-// Database Connection
-const connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  port: 3307,
-  database: "foodorderingwesitedb",
-});
-connection.connect((err) => {
-  if (err) {
-    console.error('MySQL connection error:', err);
-  } else {
-    console.log('MYSQL connected');
-  }
-});
+// Database Connection - Import from db.js
+const connection = require('./db');
 
 /*****************************  User-End Portal ***************************/
 
