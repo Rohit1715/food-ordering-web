@@ -133,7 +133,7 @@
                 <input type="hidden" name="subprice" value="<%= item.item_price %>">
                 <tr>
                     <td><%= i + 1 %></td>
-                                            <td><img src="/images/dish/<%= item.item_img %>" alt="<%= item.item_name %>" style="border-radius: 10%; border: 2px solid rgb(68,66,66); box-shadow: 4px 4px 8px black;" onerror="this.src='/images/logo.png'; this.style.border='2px solid #ccc';"></td>
+                                            <td><img src="/images/dish/<%= encodeURIComponent(item.item_img) %>" alt="<%= item.item_name %>" style="border-radius: 10%; border: 2px solid rgb(68,66,66); box-shadow: 4px 4px 8px black;" onerror="this.src='/images/logo.png'; this.style.border='2px solid #ccc';"></td>
                     <td><%= item.item_name %></td>
                     <td>₹ <span class="item-price"><%= item.item_price %></span></td>
                     <td style="text-align:center;">
