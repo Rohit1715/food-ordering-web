@@ -6,6 +6,8 @@ function initializeCart() {
   const savedCart = localStorage.getItem('cart');
   if (savedCart) {
     cart = JSON.parse(savedCart);
+  } else {
+    cart = [];
   }
 }
 
@@ -134,4 +136,14 @@ function openMyCart() {
 document.addEventListener('DOMContentLoaded', function() {
   initializeCart();
   updateCartCount();
+  
+  // Clear any stale cart data on page load
+  if (cart.length === 0) {
+    localStorage.removeItem('cart');
+  }
+  
+  // Sync with server on page load
+  if (cart.length > 0) {
+    syncCartWithBackend();
+  }
 });

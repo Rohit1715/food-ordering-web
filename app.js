@@ -161,10 +161,13 @@ function renderHomePage(req, res) {
       if (!error && results.length) {
         connection.query("SELECT * FROM menu", function (error, results) {
           if (!error) {
+            const sessionCart = req.session.cart || [];
+            const item_count = sessionCart.reduce((sum, item) => sum + item.quantity, 0);
             res.render("homepage", {
               username: userName,
               userid: userId,
               items: results,
+              item_count: item_count,
             });
           }
         });
@@ -184,6 +187,8 @@ function renderCart(req, res) {
   if (!userId || !userName) {
     return res.render("signin");
   }
+  
+  // Initialize session cart if empty
   if (sessionCart.length === 0) {
     return res.render("cart", {
       username: userName,
@@ -192,6 +197,7 @@ function renderCart(req, res) {
       item_count: 0,
     });
   }
+  
   // Fetch item details for all items in the session cart
   const itemIds = sessionCart.map(item => item.item_id);
   if (itemIds.length === 0) {
@@ -202,6 +208,7 @@ function renderCart(req, res) {
       item_count: 0,
     });
   }
+  
   connection.query(
     `SELECT * FROM menu WHERE item_id IN (${itemIds.map(() => '?').join(',')})`,
     itemIds,
@@ -233,18 +240,21 @@ function renderCart(req, res) {
 
 // Update Cart
 
-
 const parseIntOr = (val, fallback) => {
   const n = parseInt(val);
   return isNaN(n) ? fallback : n;
 };
 
 function updateCart(req, res) {
+  // Initialize session cart if not exists
+  if (!req.session.cart) {
+    req.session.cart = [];
+  }
+  
   // Handle update and remove actions from cart.ejs
   if (req.body.action === 'update') {
     const item_id = req.body.item_id;
     const quantity = parseIntOr(req.body.quantity, 1);
-    if (!req.session.cart) req.session.cart = [];
     let found = req.session.cart.find(item => item.item_id == item_id);
     if (found) {
       found.quantity = quantity;
@@ -252,12 +262,13 @@ function updateCart(req, res) {
     // If not found, do nothing (shouldn't happen from UI)
   } else if (req.body.action === 'remove') {
     const item_id = req.body.item_id;
-    if (!req.session.cart) req.session.cart = [];
+    // Remove the specific item from cart
     req.session.cart = req.session.cart.filter(item => item.item_id != item_id);
   } else if (Array.isArray(req.body.cart)) {
     // Sync from client (homepage)
     req.session.cart = req.body.cart;
   }
+  
   res.redirect('/cart');
 }
 
@@ -391,7 +402,13 @@ function renderConfirmationPage(req, res) {
     [userId, userName],
     function (error, results) {
       if (!error && results.length) {
-        res.render("confirmation", { username: userName, userid: userId });
+        const sessionCart = req.session.cart || [];
+        const item_count = sessionCart.reduce((sum, item) => sum + item.quantity, 0);
+        res.render("confirmation", { 
+          username: userName, 
+          userid: userId,
+          item_count: item_count
+        });
       } else {
         res.render("signin");
       }
@@ -414,10 +431,12 @@ function renderMyOrdersPage(req, res) {
           function (error, results) {
 
             if (!error) {
+              const sessionCart = req.session.cart || [];
+              const item_count = sessionCart.reduce((sum, item) => sum + item.quantity, 0);
               res.render("myorders", {
                 userDetails: resultUser,
                 items: results,
-                item_count: item_in_cart,
+                item_count: item_count,
               });
             }
           }
@@ -438,10 +457,12 @@ function renderSettingsPage(req, res) {
     [userId, userName],
     function (error, results) {
       if (!error && results.length) {
+        const sessionCart = req.session.cart || [];
+        const item_count = sessionCart.reduce((sum, item) => sum + item.quantity, 0);
         res.render("settings", {
           username: userName,
           userid: userId,
-          item_count: item_in_cart,
+          item_count: item_count,
           success: req.query.success
         });
       } else {

@@ -76,7 +76,7 @@
                             </form>
                             <a onClick="openMyCart()" class="header-btn header-cart">
                                 <i class="uil uil-shopping-bag"></i>
-                                <span class="cart-number" id="cart-number-count">0</span>
+                                <span class="cart-number" id="cart-number-count"><%= item_count || 0 %></span>
                             </a>
                             <div id="cart-toast" style="position:absolute; top:48px; right:0; background:#28a745; color:#fff; padding:8px 18px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.10); font-size:15px; z-index:1100; display:none; min-width:160px; text-align:center; pointer-events:none;">Item added to cart!</div>
                             <div class="dropdown">
@@ -403,7 +403,7 @@
                         <div class="col-lg-4 col-sm-6 dish-box-wp <%= items[i].item_category %>" data-cat="<%= items[i].item_category %>" data-item-id="<%= items[i].item_id %>">
                             <div class="dish-box text-center">
                                 <div class="dist-img">
-                                    <img src="/images/dish/<%= items[i].item_img %>" alt="<%= items[i].item_name %>">
+                                    <img src="/images/dish/<%= items[i].item_img %>" alt="<%= items[i].item_name %>" onerror="this.src='/images/logo.png'; this.style.border='2px solid #ccc';">
                                 </div>
                                 <div class="dish-rating">
                                     <%= items[i].item_rating %>
@@ -594,6 +594,22 @@
     });
     </script>
     <script src="/javascripts/cart.js"></script>
+    <script>
+    // Ensure cart count is properly synchronized
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize cart count from server
+        const serverCartCount = <%= item_count || 0 %>;
+        const countElement = document.getElementById('cart-number-count');
+        if (countElement) {
+            countElement.textContent = serverCartCount;
+        }
+        
+        // Clear localStorage if server cart is empty
+        if (serverCartCount === 0) {
+            localStorage.removeItem('cart');
+        }
+    });
+    </script>
     <style>
     #cart-toast {
         transition: opacity 0.3s;
