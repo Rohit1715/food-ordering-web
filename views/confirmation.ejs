@@ -93,8 +93,7 @@
                                 </div>
                                 <p>We'll be there in 45 mins, be ready with your payment.</p>
                                 <p>In mean time you may explore our menu</p>
-                                <button class="sec-btn" style="color: white; background: orange;"><a href="/homepage#menu"
-                                        style="color: white;">Menu</a></button><br><br>
+                                <button class="sec-btn" style="color: white; background: orange;" onclick="scrollToMenu()">Menu</button><br><br>
                                 <img src="/images/Delivery.png" alt="Delivery"
                                     style="width: 700px; height:400px; align-items:center ">
                             </div>
@@ -212,6 +211,12 @@
     <script src="/javascripts/smooth-scroll.js"></script>
     <!-- custom js  -->
     <script src="/javascripts/main.js"></script>
+
+    <script>
+        function scrollToMenu() {
+            window.location.href = '/homepage#menu';
+        }
+    </script>
 
     </div>
     </div>
