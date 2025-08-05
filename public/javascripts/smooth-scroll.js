@@ -90,18 +90,24 @@ jQuery(".filters").on("click", function () {
   }, 1000);
 });
 
-document.querySelector(".filters li").addEventListener("click", onResize);
-document.querySelector(".filters li").addEventListener("click", onScroll);
+// Add null checks to prevent errors
+const filtersLi = document.querySelector(".filters li");
+if (filtersLi) {
+  filtersLi.addEventListener("click", onResize);
+  filtersLi.addEventListener("click", onScroll);
+}
 
 // Scroll to top
 
 const scrolltotop = document.querySelector(".scrolltop");
 
-scrolltotop.addEventListener("click", () =>
-  gsap.to(window, {
-    scrollTo: 0,
-  })
-);
+if (scrolltotop) {
+  scrolltotop.addEventListener("click", () =>
+    gsap.to(window, {
+      scrollTo: 0,
+    })
+  );
+}
 
 // Scroll to Section
 

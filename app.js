@@ -617,14 +617,19 @@ function addFood(req, res) {
     FoodPrice,
     FoodRating,
   } = req.body;
+  
+  // Add validation for required fields
+  if (!FoodName || !FoodType || !FoodCategory || !FoodServing || !FoodCalories || !FoodPrice || !FoodRating) {
+    return res.status(400).send("All fields are required including Food Type (Veg/Non-Veg)");
+  }
+  
   if (!req.files) {
     return res.status(400).send("Image was not uploaded");
   }
-  if (!FoodCategory) {
-    return res.status(400).send("Food category is required.");
-  }
+  
   const fimage = req.files.FoodImg;
   const fimage_name = fimage.name;
+  
   if (fimage.mimetype == "image/jpeg" || fimage.mimetype == "image/png") {
     fimage.mv("public/images/dish/" + fimage_name, function (err) {
       if (err) {
@@ -645,12 +650,15 @@ function addFood(req, res) {
         function (error, results) {
           if (error) {
             console.log(error);
+            return res.status(500).send("Database error: " + error.message);
           } else {
             res.redirect("/admin_addFood");
           }
         }
       );
     });
+  } else {
+    return res.status(400).send("Only JPEG and PNG images are allowed");
   }
 }
 

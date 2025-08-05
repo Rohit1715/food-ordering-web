@@ -136,7 +136,9 @@ $(document).ready(function ($) {
   }
 
   var scene = $(".js-parallax-scene").get(0);
-  var parallaxInstance = new Parallax(scene);
+  if (scene) {
+    var parallaxInstance = new Parallax(scene);
+  }
 });
 
 jQuery(window).on("load", function () {
@@ -155,10 +157,12 @@ jQuery(window).on("load", function () {
   }
 
   // initial position on first === All
-  gsap.set(".filter-active", {
-    x: targets[0].offsetLeft,
-    width: targets[0].offsetWidth,
-  });
+  if (targets.length > 0) {
+    gsap.set(".filter-active", {
+      x: targets[0].offsetLeft,
+      width: targets[0].offsetWidth,
+    });
+  }
 
   function moveBar() {
     if (this.index != activeTab) {
