@@ -687,9 +687,6 @@ function renderViewDispatchOrdersPage(req, res) {
   const userId = req.cookies.cookuid;
   const userName = req.cookies.cookuname;
   
-  // Check if this is a refresh request
-  const isRefresh = req.query.refresh === 'true';
-  
   connection.query(
     "SELECT admin_id, admin_name FROM admin WHERE admin_id = ? and admin_name = ?",
     [userId, userName],
@@ -698,22 +695,11 @@ function renderViewDispatchOrdersPage(req, res) {
         connection.query(
           "SELECT * FROM orders ORDER BY datetime",
           function (error, results2) {
-            if (isRefresh) {
-              // For refresh requests, return only the table HTML
-              res.render("admin_view_dispatch_orders", {
-                username: userName,
-                userid: userId,
-                orders: results2,
-                refreshOnly: true
-              });
-            } else {
-              // For normal requests, return full page
-              res.render("admin_view_dispatch_orders", {
-                username: userName,
-                userid: userId,
-                orders: results2,
-              });
-            }
+            res.render("admin_view_dispatch_orders", {
+              username: userName,
+              userid: userId,
+              orders: results2,
+            });
           }
         );
       } else {

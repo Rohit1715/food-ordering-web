@@ -1,4 +1,3 @@
-<% if (!locals.refreshOnly) { %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,7 +28,6 @@
         }
     </style>
 </head>
-<% } %>
 
 <body class="body-fixed">
     <!-- start of header  -->
@@ -158,7 +156,7 @@
                                                 <img src="/images/logo.png" alt="">
                                             </a>
                                         </div>
-                                        <p>You’ll wonder how you ever lived without us.</p>
+                                        <p>You'll wonder how you ever lived without us.</p>
                                         <div class="social-icon">
                                             <ul>
                                                 <li><a href="#"><i class="uil uil-facebook-f"></i></a></li>
@@ -216,31 +214,6 @@
     <script>
         let order_id = [];
         
-        // Auto-refresh orders every 30 seconds
-        setInterval(function() {
-            refreshOrders();
-        }, 30000);
-        
-        function refreshOrders() {
-            fetch('/admin_view_dispatch_orders?refresh=true')
-                .then(response => response.text())
-                .then(html => {
-                    // Extract the table content from the response
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-                    const newTable = doc.querySelector('#order');
-                    const currentTable = document.querySelector('#order');
-                    
-                    if (newTable && currentTable) {
-                        currentTable.innerHTML = newTable.innerHTML;
-                        console.log('Orders refreshed at ' + new Date().toLocaleTimeString());
-                    }
-                })
-                .catch(error => {
-                    console.error('Error refreshing orders:', error);
-                });
-        }
-        
         function checkingDispatch() {
             console.log("Receving");
             const checking = document.querySelectorAll(".dispatch");
@@ -278,47 +251,6 @@
                 }, 1500);
             }
         }
-        
-        // Update timestamps to show relative time
-        function updateTimestamps() {
-            const timeCells = document.querySelectorAll('td:nth-child(7)');
-            timeCells.forEach(cell => {
-                const originalTime = cell.getAttribute('data-original-time');
-                if (originalTime) {
-                    const orderTime = new Date(originalTime);
-                    const now = new Date();
-                    const diffMs = now - orderTime;
-                    const diffMins = Math.floor(diffMs / 60000);
-                    const diffHours = Math.floor(diffMs / 3600000);
-                    
-                    let relativeTime;
-                    if (diffMins < 1) {
-                        relativeTime = 'Just now';
-                    } else if (diffMins < 60) {
-                        relativeTime = `${diffMins} min${diffMins > 1 ? 's' : ''} ago`;
-                    } else if (diffHours < 24) {
-                        relativeTime = `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
-                    } else {
-                        relativeTime = orderTime.toLocaleString();
-                    }
-                    
-                    cell.textContent = relativeTime;
-                }
-            });
-        }
-        
-        // Update timestamps every minute
-        setInterval(updateTimestamps, 60000);
-        
-        // Initialize timestamps on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            // Store original timestamps
-            const timeCells = document.querySelectorAll('td:nth-child(7)');
-            timeCells.forEach(cell => {
-                cell.setAttribute('data-original-time', cell.textContent);
-            });
-            updateTimestamps();
-        });
     </script>
     <!-- jquery  -->
     <script src="/javascripts/jquery-3.5.1.min.js"></script>
@@ -359,7 +291,6 @@
 
     </div>
     </div>
-<% } %>
 </body>
 
 </html>
