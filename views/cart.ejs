@@ -133,7 +133,7 @@
                 <input type="hidden" name="subprice" value="<%= item.item_price %>">
                 <tr>
                     <td><%= i + 1 %></td>
-                                            <td><img src="/images/dish/<%= encodeURIComponent(item.item_img) %>" alt="<%= item.item_name %>" style="border-radius: 10%; border: 2px solid rgb(68,66,66); box-shadow: 4px 4px 8px black;" onerror="this.src='/images/logo.png'; this.style.border='2px solid #ccc';"></td>
+                                            <td><img src="/images/dish/<%= item.item_img %>" alt="<%= item.item_name %>" style="border-radius: 10%; border: 2px solid rgb(68,66,66); box-shadow: 4px 4px 8px black;" onerror="this.src='/images/logo.png'; this.style.border='2px solid #ccc';"></td>
                     <td><%= item.item_name %></td>
                     <td>₹ <span class="item-price"><%= item.item_price %></span></td>
                     <td style="text-align:center;">
@@ -172,8 +172,14 @@
                                                 </table>
                                 </div>
                             </div><br><br>
-                            <input type="submit" value="Buy Now" class="sec-btn"
-                                style="margin-left: 43% ; width:20% ;color: white; background: orange;">
+                            <div style="text-align: center; margin-top: 20px;">
+                                <input type="submit" value="Buy Now" class="sec-btn"
+                                    style="margin-right: 10px; width:15%; color: white; background: orange;">
+                                <button type="button" onclick="clearCartAndRedirect()" class="sec-btn"
+                                    style="width:15%; color: white; background: #dc3545;">
+                                    Clear Cart
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -287,6 +293,25 @@
     <script src="/javascripts/smooth-scroll.js"></script>
     <!-- custom js  -->
     <script src="/javascripts/main.js"></script>
+    <script>
+    function clearCartAndRedirect() {
+        // Clear localStorage
+        localStorage.removeItem('cart');
+        
+        // Clear server cart
+        fetch('/clear-cart', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        }).then(() => {
+            // Redirect to homepage
+            window.location.href = '/homepage';
+        }).catch(error => {
+            console.error('Error clearing cart:', error);
+            // Redirect anyway
+            window.location.href = '/homepage';
+        });
+    }
+    </script>
 </body>
 
 </html>

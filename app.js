@@ -78,6 +78,7 @@ app.post("/signin", signInUser);
 app.get("/homepage", requireUserAuth, renderHomePage);
 app.get("/cart", requireUserAuth, renderCart);
 app.post("/cart", requireUserAuth, updateCart);
+app.post("/clear-cart", requireUserAuth, clearCart);
 app.post("/checkout", requireUserAuth, checkout);
 app.get("/confirmation", requireUserAuth, renderConfirmationPage);
 app.get("/myorders", requireUserAuth, renderMyOrdersPage);
@@ -272,23 +273,12 @@ function updateCart(req, res) {
   res.redirect('/cart');
 }
 
-// Function to fetch details of items in the cart
-let citems = [];
-let citemdetails = [];
-let item_in_cart = 0;
-function getItemDetails(citems, size) {
-  citems.forEach((item) => {
-    connection.query(
-      "SELECT * FROM menu WHERE item_id = ?",
-      [item],
-      function (error, results_item) {
-        if (!error && results_item.length) {
-          citemdetails.push(results_item[0]);
-        }
-      }
-    );
-  });
-  item_in_cart = size;
+// Old cart system removed - using session-based cart now
+
+// Clear cart function
+function clearCart(req, res) {
+  req.session.cart = [];
+  res.json({ success: true, message: 'Cart cleared' });
 }
 
 // Checkout
@@ -376,10 +366,6 @@ function checkout(req, res) {
         Promise.all(inserts).then(() => {
           // Clear session cart after successful order
           req.session.cart = [];
-          citems = [];
-          citemdetails = [];
-          item_in_cart = 0;
-          getItemDetails(citems, 0);
           if (hadError) {
             if (!res.headersSent) res.status(500).send("Order error. Some items may not have been placed.");
           } else {

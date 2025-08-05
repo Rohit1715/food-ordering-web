@@ -100,6 +100,14 @@ function syncCartWithBackend() {
   });
 }
 
+// Clear cart completely
+function clearCart() {
+  cart = [];
+  localStorage.removeItem('cart');
+  updateCartCount();
+  syncCartWithBackend();
+}
+
 // Show toast message
 function showToast(message, type = 'info') {
   // Create toast element if it doesn't exist

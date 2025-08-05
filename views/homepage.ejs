@@ -403,7 +403,7 @@
                         <div class="col-lg-4 col-sm-6 dish-box-wp <%= items[i].item_category %>" data-cat="<%= items[i].item_category %>" data-item-id="<%= items[i].item_id %>">
                             <div class="dish-box text-center">
                                                                   <div class="dist-img">
-                                      <img src="/images/dish/<%= encodeURIComponent(items[i].item_img) %>" alt="<%= items[i].item_name %>" onerror="this.src='/images/logo.png'; this.style.border='2px solid #ccc';">
+                                      <img src="/images/dish/<%= items[i].item_img %>" alt="<%= items[i].item_name %>" onerror="this.src='/images/logo.png'; this.style.border='2px solid #ccc';">
                                   </div>
                                 <div class="dish-rating">
                                     <%= items[i].item_rating %>
@@ -604,6 +604,13 @@
         // Clear localStorage if server cart is empty
         if (serverCartCount === 0) {
             localStorage.removeItem('cart');
+        }
+        
+        // Force clear old cart data if there's a mismatch
+        const localCart = localStorage.getItem('cart');
+        if (localCart && serverCartCount === 0) {
+            localStorage.removeItem('cart');
+            console.log('Cleared stale cart data');
         }
     });
     </script>
