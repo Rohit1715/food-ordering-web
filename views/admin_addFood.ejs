@@ -71,6 +71,11 @@
                                 <div class="sec-title-shape mb-4">
                                     <img src="/images/title-shape.svg" alt="">
                                 </div>
+                                <% if (typeof success !== 'undefined' && success === 'food_added') { %>
+                                    <div class="alert alert-success" style="background: #d4edda; color: #155724; padding: 15px; border-radius: 5px; margin-bottom: 20px; border: 1px solid #c3e6cb;">
+                                        ✅ New food item added successfully!
+                                    </div>
+                                <% } %>
                                 <form action="/admin_addFood" method="post" enctype="multipart/form-data">
                                     <input type="text" placeholder="Enter Food Name" required class="form-input"
                                         name="FoodName" id="FoodName" style="width: 550px;" /><br><br>

@@ -1,155 +1,137 @@
-
-
-// Use backend session as the single source of truth for cart
+// Cart functionality
 let cart = [];
 
-// On homepage, fetch cart count from backend session (if available)
-function updateCartCountFromBackend() {
-  fetch('/cart', { method: 'GET' })
-    .then(res => res.text())
-    .then(html => {
-      // Parse the returned HTML to get the cart count
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
-      const countSpan = doc.getElementById('cart-number-count');
-      if (countSpan && document.getElementById('cart-number-count')) {
-        document.getElementById('cart-number-count').innerHTML = countSpan.innerHTML;
-      }
-      // Also update cart in-memory and localStorage from backend session
-      const cartTable = doc.getElementById('mycart');
-      if (cartTable) {
-        // Parse cart items from table rows (if needed)
-        // But better: fetch cart JSON from a new endpoint if possible
-      }
-    });
+// Initialize cart from localStorage
+function initializeCart() {
+  const savedCart = localStorage.getItem('cart');
+  if (savedCart) {
+    cart = JSON.parse(savedCart);
+  }
 }
 
-if (document.getElementById("cart-number-count")) {
-  updateCartCountFromBackend();
+// Update cart count display
+function updateCartCount() {
+  const countElement = document.getElementById('cart-number-count');
+  if (countElement) {
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    countElement.textContent = totalItems;
+  }
 }
 
-
-
-
-
-
-
-
+// Add item to cart
 function addToCart(item_id) {
-  // Validate item_id is a valid number
   if (typeof item_id === 'undefined' || isNaN(Number(item_id))) {
     return;
   }
-  // Always fetch latest cart from backend session before adding
-  fetch('/cart', { method: 'GET' })
-    .then(res => res.text())
-    .then(html => {
-      // Parse cart items from backend-rendered HTML
-      // (Assume cart items are not available as JSON, so fallback to local cart)
-      // If you add a /cart/json endpoint, you can fetch the real cart here
-      // For now, just add the item as a new cart
-      let newCart = [];
-      // If cart is empty, start fresh
-      if (!cart || !Array.isArray(cart) || cart.length === 0) {
-        newCart = [{ item_id: item_id, quantity: 1 }];
-      } else {
-        // Copy cart and add/increment item
-        newCart = cart.slice();
-        let found = newCart.find(item => item.item_id === item_id);
-        if (found) {
-          found.quantity++;
-        } else {
-          newCart.push({ item_id: item_id, quantity: 1 });
-        }
-      }
-      cart = newCart;
-      localStorage.setItem('cart', JSON.stringify(cart));
-      fetch('/cart', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ cart })
-      }).then(() => {
-        updateCartCountFromBackend();
-        // Show success toast
-        var toast = document.getElementById('cart-toast');
-        if (toast) {
-          toast.style.display = 'block';
-          toast.style.opacity = '1';
-          setTimeout(function() {
-            toast.style.opacity = '0';
-            setTimeout(function(){ toast.style.display = 'none'; toast.style.opacity = '1'; }, 300);
-          }, 1500);
-        }
-      });
-    });
+
+  // Find if item already exists in cart
+  const existingItem = cart.find(item => item.item_id == item_id);
+  
+  if (existingItem) {
+    existingItem.quantity++;
+  } else {
+    cart.push({ item_id: item_id, quantity: 1 });
+  }
+
+  // Save to localStorage
+  localStorage.setItem('cart', JSON.stringify(cart));
+  
+  // Update cart count
+  updateCartCount();
+  
+  // Show success toast
+  showToast('Item added to cart!', 'success');
+  
+  // Sync with backend
+  syncCartWithBackend();
 }
 
-
-
-
-
-
-
+// Remove item from cart
 function removeFromCart(item_id) {
-  // Validate item_id is a valid number
   if (typeof item_id === 'undefined' || isNaN(Number(item_id))) {
     return;
   }
-  // Always fetch latest cart from backend session before removing
-  fetch('/cart', { method: 'GET' })
-    .then(res => res.text())
-    .then(html => {
-      // Parse cart items from backend-rendered HTML
-      // (Assume cart items are not available as JSON, so fallback to local cart)
-      let newCart = cart.slice();
-      let found = newCart.find(item => item.item_id === item_id);
-      if (found) {
-        found.quantity--;
-        if (found.quantity <= 0) {
-          newCart = newCart.filter(item => item.item_id !== item_id);
-        }
-      }
-      cart = newCart;
-      if (cart.length === 0) {
-        localStorage.removeItem('cart');
-        fetch('/cart', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ cart: [] })
-        }).then(() => {
-          updateCartCountFromBackend();
-        });
-      } else {
-        localStorage.setItem('cart', JSON.stringify(cart));
-        fetch('/cart', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ cart })
-        }).then(() => {
-          updateCartCountFromBackend();
-        });
-      }
-    });
+
+  // Find item in cart
+  const itemIndex = cart.findIndex(item => item.item_id == item_id);
+  
+  if (itemIndex !== -1) {
+    if (cart[itemIndex].quantity > 1) {
+      cart[itemIndex].quantity--;
+    } else {
+      cart.splice(itemIndex, 1);
+    }
+  }
+
+  // Save to localStorage
+  localStorage.setItem('cart', JSON.stringify(cart));
+  
+  // Update cart count
+  updateCartCount();
+  
+  // Show success toast
+  showToast('Item removed from cart!', 'success');
+  
+  // Sync with backend
+  syncCartWithBackend();
 }
 
+// Sync cart with backend
+function syncCartWithBackend() {
+  fetch('/cart', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ cart: cart })
+  }).catch(error => {
+    console.error('Error syncing cart:', error);
+  });
+}
 
+// Show toast message
+function showToast(message, type = 'info') {
+  // Create toast element if it doesn't exist
+  let toast = document.getElementById('cart-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'cart-toast';
+    toast.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: ${type === 'success' ? '#d4edda' : '#f8d7da'};
+      color: ${type === 'success' ? '#155724' : '#721c24'};
+      padding: 15px 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 10000;
+      font-size: 14px;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    `;
+    document.body.appendChild(toast);
+  }
 
+  toast.textContent = message;
+  toast.style.display = 'block';
+  toast.style.opacity = '1';
 
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    setTimeout(() => {
+      toast.style.display = 'none';
+    }, 300);
+  }, 2000);
+}
+
+// Open cart page
 function openMyCart() {
-  // Always fetch latest cart from backend session before opening cart page
-  fetch('/cart', { method: 'GET' })
-    .then(res => res.text())
-    .then(html => {
-      // Optionally update cart from backend if you parse it
-      // For now, just always sync localStorage and backend before redirect
-      fetch('/cart', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ cart })
-      }).then(() => {
-        window.location.href = "/cart";
-      }).catch(() => {
-        window.location.href = "/cart";
-      });
-    });
+  syncCartWithBackend();
+  window.location.href = "/cart";
 }
+
+// Initialize cart when page loads
+document.addEventListener('DOMContentLoaded', function() {
+  initializeCart();
+  updateCartCount();
+});

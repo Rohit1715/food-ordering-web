@@ -442,7 +442,10 @@ function renderSettingsPage(req, res) {
           username: userName,
           userid: userId,
           item_count: item_in_cart,
+          success: req.query.success
         });
+      } else {
+        res.render("signin");
       }
     }
   );
@@ -451,27 +454,25 @@ function renderSettingsPage(req, res) {
 function updateAddress(req, res) {
   const userId = req.cookies.cookuid;
   const userName = req.cookies.cookuname;
-  const address = req.body.address;
+  const newAddress = req.body.address;
   connection.query(
     "SELECT user_id, user_name FROM users WHERE user_id = ? AND user_name = ?",
     [userId, userName],
     function (error, results) {
       if (!error && results.length) {
         connection.query(
-          "UPDATE users SET user_address = ? WHERE user_id = ?",
-          [address, userId],
+          "UPDATE users SET user_address = ? WHERE user_id = ? AND user_name = ?",
+          [newAddress, userId, userName],
           function (error, results) {
             if (!error) {
-              res.render("settings", {
-                username: userName,
-                userid: userId,
-                item_count: item_in_cart,
-              });
+              res.redirect("/settings?success=address_updated");
+            } else {
+              res.status(500).send("Something went wrong");
             }
           }
         );
       } else {
-        res.render("signin");
+        res.status(500).send("Something went wrong");
       }
     }
   );
@@ -481,27 +482,25 @@ function updateAddress(req, res) {
 function updateContact(req, res) {
   const userId = req.cookies.cookuid;
   const userName = req.cookies.cookuname;
-  const mobileno = req.body.mobileno;
+  const newMobile = req.body.mobileno;
   connection.query(
     "SELECT user_id, user_name FROM users WHERE user_id = ? AND user_name = ?",
     [userId, userName],
     function (error, results) {
       if (!error && results.length) {
         connection.query(
-          "UPDATE users SET user_mobileno = ? WHERE user_id = ?",
-          [mobileno, userId],
+          "UPDATE users SET user_mobileno = ? WHERE user_id = ? AND user_name = ?",
+          [newMobile, userId, userName],
           function (error, results) {
             if (!error) {
-              res.render("settings", {
-                username: userName,
-                userid: userId,
-                item_count: item_in_cart,
-              });
+              res.redirect("/settings?success=contact_updated");
+            } else {
+              res.status(500).send("Something went wrong");
             }
           }
         );
       } else {
-        res.render("signin");
+        res.status(500).send("Something went wrong");
       }
     }
   );
@@ -513,26 +512,34 @@ function updatePassword(req, res) {
   const userName = req.cookies.cookuname;
   const oldPassword = req.body.old_password;
   const newPassword = req.body.new_password;
+  const confirmPassword = req.body.confirmPassword;
+
+  if (newPassword !== confirmPassword) {
+    return res.status(400).send("New password and confirm password do not match");
+  }
+
   connection.query(
-    "SELECT user_id, user_name FROM users WHERE user_id = ? AND user_name = ? AND user_password = ?",
-    [userId, userName, oldPassword],
+    "SELECT user_id, user_name, user_password FROM users WHERE user_id = ? AND user_name = ?",
+    [userId, userName],
     function (error, results) {
       if (!error && results.length) {
-        connection.query(
-          "UPDATE users SET user_password = ? WHERE user_id = ?",
-          [newPassword, userId],
-          function (error, results) {
-            if (!error) {
-              res.render("settings", {
-                username: userName,
-                userid: userId,
-                item_count: item_in_cart,
-              });
+        if (results[0].user_password === oldPassword) {
+          connection.query(
+            "UPDATE users SET user_password = ? WHERE user_id = ? AND user_name = ?",
+            [newPassword, userId, userName],
+            function (error, results) {
+              if (!error) {
+                res.redirect("/settings?success=password_updated");
+              } else {
+                res.status(500).send("Something went wrong");
+              }
             }
-          }
-        );
+          );
+        } else {
+          res.status(400).send("Old password is incorrect");
+        }
       } else {
-        res.render("signin");
+        res.status(500).send("Something went wrong");
       }
     }
   );
@@ -596,8 +603,7 @@ function renderAddFoodPage(req, res) {
       if (!error && results.length) {
         res.render("admin_addFood", {
           username: userName,
-          userid: userId,
-          items: results,
+          success: req.query.success
         });
       } else {
         res.render("admin_signin");
@@ -652,7 +658,7 @@ function addFood(req, res) {
             console.log(error);
             return res.status(500).send("Database error: " + error.message);
           } else {
-            res.redirect("/admin_addFood");
+            res.redirect("/admin_addFood?success=food_added");
           }
         }
       );
@@ -743,7 +749,6 @@ function dispatchOrders(req, res) {
 }
 
 // Render Admin Change Price Page
-// Render Admin Change Price Page
 function renderChangePricePage(req, res) {
   const userId = req.cookies.cookuid;
   const userName = req.cookies.cookuname;
@@ -757,6 +762,7 @@ function renderChangePricePage(req, res) {
             res.render("admin_change_price", {
               username: userName,
               items: results,
+              success: req.query.success
             });
           }
         });
@@ -781,7 +787,7 @@ function changePrice(req, res) {
           [new_food_price, item_name],
           function (error, results2) {
             if (!error) {
-              res.render("adminHomepage");
+              res.redirect("/admin_change_price?success=price_updated");
             } else {
               res.status(500).send("Something went wrong");
             }

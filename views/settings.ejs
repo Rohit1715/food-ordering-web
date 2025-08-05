@@ -90,6 +90,11 @@
                                     <div class="sec-title-shape mb-4">
                                         <img src="assets/images/title-shape.svg" alt="">
                                     </div>
+                                    <% if (typeof success !== 'undefined' && success === 'address_updated') { %>
+                                        <div class="alert alert-success" style="background: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-bottom: 15px; border: 1px solid #c3e6cb; font-size: 14px;">
+                                            ✅ Address updated successfully!
+                                        </div>
+                                    <% } %>
                                     <form action="/address" method="post">
                                         <input type="text" placeholder="Enter your New Address" name="address" required
                                             class="form-input" style="width: 450px;" /><br><br>
@@ -112,6 +117,11 @@
                                     <div class="sec-title-shape mb-4">
                                         <img src="assets/images/title-shape.svg" alt="">
                                     </div>
+                                    <% if (typeof success !== 'undefined' && success === 'contact_updated') { %>
+                                        <div class="alert alert-success" style="background: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-bottom: 15px; border: 1px solid #c3e6cb; font-size: 14px;">
+                                            ✅ Contact number updated successfully!
+                                        </div>
+                                    <% } %>
                                     <form action="/contact" method="post">
                                         <input type="text" placeholder="Enter your New Mobile Number" name="mobileno"
                                             required class="form-input" style="width: 450px;" /><br><br>
@@ -134,6 +144,11 @@
                                     <div class="sec-title-shape mb-4">
                                         <img src="assets/images/title-shape.svg" alt="">
                                     </div>
+                                    <% if (typeof success !== 'undefined' && success === 'password_updated') { %>
+                                        <div class="alert alert-success" style="background: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-bottom: 15px; border: 1px solid #c3e6cb; font-size: 14px;">
+                                            ✅ Password updated successfully!
+                                        </div>
+                                    <% } %>
                                     <form action="/password" method="post">
                                         <input type="password" placeholder="Old Password" required class="form-input"
                                             name="old_password" id="InputOldPassword" style="width: 450px;" /><br><br>

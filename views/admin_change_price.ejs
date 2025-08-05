@@ -71,6 +71,11 @@
                                 <div class="sec-title-shape mb-4">
                                     <img src="/images/title-shape.svg" alt="">
                                 </div>
+                                <% if (typeof success !== 'undefined' && success === 'price_updated') { %>
+                                    <div class="alert alert-success" style="background: #d4edda; color: #155724; padding: 15px; border-radius: 5px; margin-bottom: 20px; border: 1px solid #c3e6cb;">
+                                        ✅ Price updated successfully!
+                                    </div>
+                                <% } %>
                                 <form action="/admin_change_price" method="post" enctype="multipart/form-data">
                                     <label for="foods_price">
                                         <select name="item_name" id="item_name" class="form-input">
