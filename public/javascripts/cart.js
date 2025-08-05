@@ -108,6 +108,21 @@ function clearCart() {
   syncCartWithBackend();
 }
 
+// Force reset cart - called when user wants to start completely fresh
+function resetCart() {
+  cart = [];
+  localStorage.removeItem('cart');
+  updateCartCount();
+  
+  // Force server reset
+  fetch('/reset-cart', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' }
+  }).catch(error => {
+    console.error('Error resetting cart:', error);
+  });
+}
+
 // Show toast message
 function showToast(message, type = 'info') {
   // Create toast element if it doesn't exist
@@ -153,29 +168,32 @@ function openMyCart() {
 
 // Initialize cart when page loads
 document.addEventListener('DOMContentLoaded', function() {
+  // Get server cart count from the page
+  const countElement = document.getElementById('cart-number-count');
+  const serverCartCount = countElement ? parseInt(countElement.textContent) || 0 : 0;
+  
+  // Initialize local cart
   initializeCart();
+  
+  // If server cart is empty, clear local cart completely
+  if (serverCartCount === 0) {
+    cart = [];
+    localStorage.removeItem('cart');
+    console.log('Server cart is empty - cleared local cart');
+  } else {
+    // If server has items, sync them to local storage
+    if (cart.length === 0) {
+      // Server has items but local cart is empty - this shouldn't happen
+      // but we'll sync from server
+      console.log('Server has items but local cart is empty - syncing from server');
+    }
+  }
+  
+  // Update cart count display
   updateCartCount();
   
-  // Clear any stale cart data on page load
-  if (cart.length === 0) {
-    localStorage.removeItem('cart');
-  }
-  
-  // Sync with server on page load
+  // Sync with server if we have items
   if (cart.length > 0) {
     syncCartWithBackend();
-  }
-  
-  // Listen for cart count updates from server
-  const countElement = document.getElementById('cart-number-count');
-  if (countElement) {
-    // Update count from server data if available
-    const serverCount = countElement.textContent;
-    if (serverCount && serverCount !== '0') {
-      // If server has items but localStorage is empty, sync from server
-      if (cart.length === 0) {
-        syncCartWithBackend();
-      }
-    }
   }
 });

@@ -74,10 +74,13 @@
                                 </button>
                                 <div id="menu-search-dropdown" style="display:none; position:absolute; top:40px; left:0; width:100%; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.15); z-index:1000; border-radius:8px;"></div>
                             </form>
-                            <a onClick="openMyCart()" class="header-btn header-cart">
-                                <i class="uil uil-shopping-bag"></i>
-                                <span class="cart-number" id="cart-number-count"><%= item_count || 0 %></span>
-                            </a>
+                                                         <a onClick="openMyCart()" class="header-btn header-cart">
+                                 <i class="uil uil-shopping-bag"></i>
+                                 <span class="cart-number" id="cart-number-count"><%= item_count || 0 %></span>
+                             </a>
+                             <button onClick="resetCart()" class="header-btn" style="background: #dc3545; color: white; border: none; padding: 8px 12px; border-radius: 4px; margin-left: 10px; font-size: 12px;" title="Reset Cart">
+                                 <i class="uil uil-refresh"></i>
+                             </button>
                             <div id="cart-toast" style="position:absolute; top:48px; right:0; background:#28a745; color:#fff; padding:8px 18px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.10); font-size:15px; z-index:1100; display:none; min-width:160px; text-align:center; pointer-events:none;">Item added to cart!</div>
                             <div class="dropdown">
                                 <label><button type="button" class="header-username user-dropdown-toggle" style="color: #ff8243; padding: 4px 8px;"><b><i><%= username %></i></b></button></label>
@@ -611,6 +614,10 @@
         if (localCart && serverCartCount === 0) {
             localStorage.removeItem('cart');
             console.log('Cleared stale cart data');
+            // Force server reset to ensure complete cleanup
+            if (typeof resetCart === 'function') {
+                resetCart();
+            }
         }
     });
     </script>

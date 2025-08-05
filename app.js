@@ -79,6 +79,7 @@ app.get("/homepage", requireUserAuth, renderHomePage);
 app.get("/cart", requireUserAuth, renderCart);
 app.post("/cart", requireUserAuth, updateCart);
 app.post("/clear-cart", requireUserAuth, clearCart);
+app.post("/reset-cart", requireUserAuth, resetCart);
 app.post("/checkout", requireUserAuth, checkout);
 app.get("/confirmation", requireUserAuth, renderConfirmationPage);
 app.get("/myorders", requireUserAuth, renderMyOrdersPage);
@@ -279,6 +280,12 @@ function updateCart(req, res) {
 function clearCart(req, res) {
   req.session.cart = [];
   res.json({ success: true, message: 'Cart cleared' });
+}
+
+// Force reset cart - called when user starts fresh
+function resetCart(req, res) {
+  req.session.cart = [];
+  res.json({ success: true, message: 'Cart reset' });
 }
 
 // Checkout
