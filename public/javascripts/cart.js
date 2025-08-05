@@ -5,7 +5,16 @@ let cart = [];
 function initializeCart() {
   const savedCart = localStorage.getItem('cart');
   if (savedCart) {
-    cart = JSON.parse(savedCart);
+    try {
+      cart = JSON.parse(savedCart);
+      // Ensure cart is an array
+      if (!Array.isArray(cart)) {
+        cart = [];
+      }
+    } catch (e) {
+      console.error('Error parsing cart from localStorage:', e);
+      cart = [];
+    }
   } else {
     cart = [];
   }
@@ -15,7 +24,7 @@ function initializeCart() {
 function updateCartCount() {
   const countElement = document.getElementById('cart-number-count');
   if (countElement) {
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 0), 0);
     countElement.textContent = totalItems;
   }
 }
@@ -23,6 +32,7 @@ function updateCartCount() {
 // Add item to cart
 function addToCart(item_id) {
   if (typeof item_id === 'undefined' || isNaN(Number(item_id))) {
+    console.error('Invalid item_id:', item_id);
     return;
   }
 
@@ -30,7 +40,7 @@ function addToCart(item_id) {
   const existingItem = cart.find(item => item.item_id == item_id);
   
   if (existingItem) {
-    existingItem.quantity++;
+    existingItem.quantity = (existingItem.quantity || 0) + 1;
   } else {
     cart.push({ item_id: item_id, quantity: 1 });
   }
@@ -51,6 +61,7 @@ function addToCart(item_id) {
 // Remove item from cart
 function removeFromCart(item_id) {
   if (typeof item_id === 'undefined' || isNaN(Number(item_id))) {
+    console.error('Invalid item_id:', item_id);
     return;
   }
 
@@ -145,5 +156,18 @@ document.addEventListener('DOMContentLoaded', function() {
   // Sync with server on page load
   if (cart.length > 0) {
     syncCartWithBackend();
+  }
+  
+  // Listen for cart count updates from server
+  const countElement = document.getElementById('cart-number-count');
+  if (countElement) {
+    // Update count from server data if available
+    const serverCount = countElement.textContent;
+    if (serverCount && serverCount !== '0') {
+      // If server has items but localStorage is empty, sync from server
+      if (cart.length === 0) {
+        syncCartWithBackend();
+      }
+    }
   }
 });

@@ -383,7 +383,7 @@ function checkout(req, res) {
           if (hadError) {
             if (!res.headersSent) res.status(500).send("Order error. Some items may not have been placed.");
           } else {
-            if (!res.headersSent) res.render("confirmation", { username: userName, userid: userId });
+            if (!res.headersSent) res.render("confirmation", { username: userName, userid: userId, item_count: 0 });
           }
         });
       } else {
