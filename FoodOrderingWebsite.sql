@@ -70,7 +70,7 @@ CREATE TABLE `menu` (
 
 LOCK TABLES `menu` WRITE;
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
-INSERT INTO `menu` VALUES (1,'Omelette','Non-Veg','breakfast','1',60,60,'4.3','Omelette.jpg'),(2,'Vegetable Sandwich','Veg','breakfast','1',60,40,'5.0','Vegetable Sandwich.jpg'),(4,'Fruit Salad','Veg','breakfast','1',80,80,'5.0','FriutSalad.jpg'),(5,'Egg Briyani','Non-Veg','lunch','1',180,120,'4.5','Egg Briyani.jpg'),(6,'Fish Curry','Non-Veg','lunch','1',180,200,'4.8','Fish Curry.jpg'),(7,'Masala Dosa','Veg','lunch','1',100,100,'4.6','MasalaDosa.jpg'),(8,'Veg Platter','Veg','dinner','1',120,200,'4.3','Thaali.jpg'),(9,'Chicken Roti','Non-Veg','dinner','1',180,200,'4.5','Chicken Roti.jpg'),(10,'Fried Rice','Veg','dinner','1',150,120,'4.0','Fried Rice.jpg'),(11,'Oreo Shake','Veg','beverages','1',80,90,'4.1','Oreao Shake.jpg'),(12,'Pineapple Juice','Veg','beverages','1',50,60,'4.4','Pineapple Juice.jpg'),(13,'Lemonade','Veg','beverages','1',50,60,'5.0','Lemonade.jpg'),(14,'Strawberry Icecream','Veg','desserts','2',80,90,'4.8','Icecream.jpg'),(15,'CupCake','Non-Veg','desserts','2',100,60,'4.2','Cupcake.jpg'),(16,'Gulab Jammun','Veg','desserts','2',100,90,'5.0','Gulabjammun.jpg'),(18,'Khaman-Dhokla With Pudina Chutney','Veg','breakfast','1',110,100,'5.0','Khaman-Dhokla.jpg');
+INSERT INTO `menu` VALUES (1,'Omelette','Non-Veg','breakfast','1',60,60,'4.3','Omelette.jpg'),(2,'Vegetable Sandwich','Veg','breakfast','1',60,40,'5.0','Vegetable Sandwich.jpg'),(4,'Fruit Salad','Veg','breakfast','1',80,80,'5.0','FriutSalad.jpg'),(5,'Egg Briyani','Non-Veg','lunch','1',180,120,'4.5','Egg Briyani.jpg'),(7,'Masala Dosa','Veg','lunch','1',100,100,'4.6','MasalaDosa.jpg'),(8,'Veg Platter','Veg','dinner','1',120,200,'4.3','Thaali.jpg'),(9,'Chicken Roti','Non-Veg','dinner','1',180,200,'4.5','Chicken Roti.jpg'),(10,'Fried Rice','Veg','dinner','1',150,120,'4.0','Fried Rice.jpg'),(11,'Oreo Shake','Veg','beverages','1',80,90,'4.1','Oreao Shake.jpg'),(12,'Pineapple Juice','Veg','beverages','1',50,60,'4.4','Pineapple Juice.jpg'),(13,'Lemonade','Veg','beverages','1',50,60,'5.0','Lemonade.jpg'),(14,'Strawberry Icecream','Veg','desserts','2',80,90,'4.8','Icecream.jpg'),(15,'CupCake','Non-Veg','desserts','2',100,60,'4.2','Cupcake.jpg'),(16,'Gulab Jammun','Veg','desserts','2',100,90,'5.0','Gulabjammun.jpg'),(18,'Khaman-Dhokla With Pudina Chutney','Veg','breakfast','1',110,100,'5.0','Khaman-Dhokla.jpg');
 /*!40000 ALTER TABLE `menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -98,7 +98,7 @@ CREATE TABLE `order_dispatch` (
 
 LOCK TABLES `order_dispatch` WRITE;
 /*!40000 ALTER TABLE `order_dispatch` DISABLE KEYS */;
-INSERT INTO `order_dispatch` VALUES ('01434da8-d937-41e7-a763-c3521fd33d7c',2,6,1,200,'2025-06-24 15:34:11'),('9c059a01-adda-47e8-aefa-464f81e8842a',2,13,1,60,'2025-06-24 15:46:55');
+INSERT INTO `order_dispatch` VALUES ('9c059a01-adda-47e8-aefa-464f81e8842a',2,13,1,60,'2025-06-24 15:46:55');
 /*!40000 ALTER TABLE `order_dispatch` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -126,7 +126,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES ('70350c30-73ff-4968-b3dc-92910f498bfd',2,6,1,200,'2025-06-24 15:42:16'),('88cec9b5-6281-4cf5-b280-221672c696a0',2,9,1,200,'2025-06-24 13:17:46'),('d6d48ec1-ab9b-4007-bd0e-44f681681c3d',2,6,1,200,'2025-06-24 13:21:37');
+INSERT INTO `orders` VALUES ('88cec9b5-6281-4cf5-b280-221672c696a0',2,9,1,200,'2025-06-24 13:17:46');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
