@@ -26,6 +26,20 @@
             padding: 8px 10px;
             border-radius: 20px;
         }
+        .table-responsive-mobile {
+            width: 100%;
+            overflow-x: auto;
+        }
+        @media (max-width: 600px) {
+            #order th, #order td, .table-responsive-mobile table th, .table-responsive-mobile table td {
+                font-size: 14px;
+                padding: 6px 4px;
+            }
+            .sec-btn {
+                width: 100% !important;
+                margin-left: 0 !important;
+            }
+        }
     </style>
 </head>
 
@@ -82,56 +96,58 @@
                                 <div class="sec-title-shape mb-4">
                                     <img src="/images/title-shape.svg" alt="">
                                 </div>
-                                <table id="order">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 8%;">S.No.:</th>
-                                            <th style="width: 40%;">Order ID</th>
-                                            <th style="width: 8%;">User ID</th>
-                                            <th style="width: 8%;">Item ID</th>
-                                            <th style="width: 8%;">Quantity</th>
-                                            <th style="width: 8%;">Price</th>
-                                            <th style="width: 15%;">Date/Time</th>
-                                            <th style="width: 5%;">Dispatch</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <% let size=orders.length; %>
-                                            <% if(size==0) { %>
-                                                <h1>No Orders Are Pending</h1><br><br>
-                                                <% } else { %>
+                                <div class="table-responsive-mobile">
+                                    <table id="order">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 8%;">S.No.:</th>
+                                                <th style="width: 40%;">Order ID</th>
+                                                <th style="width: 8%;">User ID</th>
+                                                <th style="width: 8%;">Item ID</th>
+                                                <th style="width: 8%;">Quantity</th>
+                                                <th style="width: 8%;">Price</th>
+                                                <th style="width: 15%;">Date/Time</th>
+                                                <th style="width: 5%;">Dispatch</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% let size=orders.length; %>
+                                                <% if(size==0) { %>
+                                                    <h1>No Orders Are Pending</h1><br><br>
+                                                    <% } else { %>
 
-                                                    <% for(let i=0;i<size;i++) { %>
-                                                        <tr>
-                                                            <td>
-                                                                <%= i+1 %>
-                                                            </td>
-                                                            <td>
-                                                                <%= orders[i].order_id %>
-                                                            </td>
-                                                            <td>
-                                                                <%= orders[i].user_id %>
-                                                            </td>
-                                                            <td>
-                                                                <%= orders[i].item_id %>
-                                                            </td>
-                                                            <td>
-                                                                <%= orders[i].quantity %>
-                                                            </td>
-                                                            <td>
-                                                                <%= orders[i].price %>
-                                                            </td>
-                                                            <td>
-                                                                <%= orders[i].datetime %>
-                                                            </td>
-                                                            <td><input type="checkbox" class="dispatch form-check-input"
-                                                                    name="<%= orders[i].order_id %>" id="dispatch"
-                                                                    value="true" onchange="checkingDispatch()"></td>
-                                                        </tr>
-                                                        <% } %>
+                                                        <% for(let i=0;i<size;i++) { %>
+                                                            <tr>
+                                                                <td>
+                                                                    <%= i+1 %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= orders[i].order_id %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= orders[i].user_id %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= orders[i].item_id %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= orders[i].quantity %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= orders[i].price %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= orders[i].datetime %>
+                                                                </td>
+                                                                <td><input type="checkbox" class="dispatch form-check-input"
+                                                                        name="<%= orders[i].order_id %>" id="dispatch"
+                                                                        value="true" onchange="checkingDispatch()"></td>
+                                                            </tr>
                                                             <% } %>
-                                    </tbody>
-                                </table>
+                                                                <% } %>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                             <button class="sec-btn" onclick="dispatching()"
                                 style="margin-left: 35%; width:30% ;color: white; background: orange;">Click To

@@ -26,6 +26,32 @@
             padding: 8px 10px;
             border-radius: 20px;
         }
+        .table-responsive-mobile {
+            width: 100%;
+            overflow-x: auto;
+        }
+        .cart-action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        @media (max-width: 600px) {
+            .cart-action-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .buy-now-btn,
+            .clear-cart-btn {
+                width: 100% !important;
+                margin-right: 0 !important;
+                margin-bottom: 10px;
+            }
+            #mycart th, #mycart td {
+                font-size: 14px;
+                padding: 6px 4px;
+            }
+        }
 
         a {
             color: white;
@@ -108,18 +134,19 @@
                                     <% let count=0 %>
                                         <% let total_price=0 %>
                                             <% let total_items=0 %>
-                                                <table id="mycart">
-                                                    <thead>
-                                                        <tr>
-                                                            <th style="width: 5%;">S.No.:</th>
-                                                            <th style="width: 10%;">Product</th>
-                                                            <th style="width: 50%;">Product Name</th>
-                                                            <th style="width: 10%;">Price</th>
-                                                            <th style="width: 5%;">Quantity</th>
-                                                            <th style="width: 20%;">SubTotal</th>
-                                                            <th style="width: 10%;">Remove</th>
-                                                        </tr>
-                                                    </thead>
+                                                <div class="table-responsive-mobile">
+                                                    <table id="mycart">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width: 5%;">S.No.:</th>
+                                                                <th style="width: 10%;">Product</th>
+                                                                <th style="width: 50%;">Product Name</th>
+                                                                <th style="width: 10%;">Price</th>
+                                                                <th style="width: 5%;">Quantity</th>
+                                                                <th style="width: 20%;">SubTotal</th>
+                                                                <th style="width: 10%;">Remove</th>
+                                                            </tr>
+                                                        </thead>
     <tbody>
         <% if (items && items.length > 0) { %>
             <% let total_price = 0; let total_qty = 0; %>
@@ -169,14 +196,14 @@
             <td></td>
         </tr>
     </tfoot>
-                                                </table>
-                                </div>
-                            </div><br><br>
-                            <div style="text-align: center; margin-top: 20px;">
-                                <input type="submit" value="Buy Now" class="sec-btn"
-                                    style="margin-right: 10px; width:15%; color: white; background: orange;">
-                                <button type="button" onclick="clearCartAndRedirect()" class="sec-btn"
-                                    style="width:15%; color: white; background: #dc3545;">
+                                                    </table>
+                                                </div>
+                                </div><br><br>
+                            <div class="cart-action-buttons">
+                                <input type="submit" value="Buy Now" class="sec-btn buy-now-btn"
+                                    style="margin-right: 10px; color: white; background: orange;">
+                                <button type="button" onclick="clearCartAndRedirect()" class="sec-btn clear-cart-btn"
+                                    style="color: white; background: #dc3545;">
                                     Clear Cart
                                 </button>
                             </div>
