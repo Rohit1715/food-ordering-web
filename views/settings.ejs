@@ -17,6 +17,24 @@
     <link rel="stylesheet" href="/stylesheets/jquery.fancybox.min.css">
     <!-- custom css  -->
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <style>
+        @media (max-width: 768px) {
+            .settings-container {
+                flex-direction: column !important;
+            }
+            .settings-section {
+                width: 100% !important;
+                margin-bottom: 30px;
+            }
+            .form-input {
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+            .sec-btn {
+                width: 100% !important;
+            }
+        }
+    </style>
 </head>
 
 <body class="body-fixed">
@@ -80,8 +98,8 @@
         <div id="js-scroll-content">
 
             <!-- Setting Page Starts -->
-            <div style="display: flex; margin-top: 20px;">
-                <section class="about-sec section col-sm-4" id="about">
+            <div class="settings-container" style="display: flex; margin-top: 20px;">
+                <section class="about-sec section settings-section col-sm-4" id="about">
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-12">
@@ -97,9 +115,9 @@
                                     <% } %>
                                     <form action="/address" method="post">
                                         <input type="text" placeholder="Enter your New Address" name="address" required
-                                            class="form-input" /><br><br>
+                                            class="form-input" style="width: 100%; max-width: 450px;" /><br><br>
                                         <input type="submit" value="Update Address" class="sec-btn"
-                                            style="color: white; background: orange;"
+                                            style="color: white; background: orange; width: 100%; max-width: 450px;"
                                             onmouseover="this.style.boxShadow='inset 9px 9px 12px orange, inset -9px -9px 12px rgb(238, 180, 73);'" /><br>
                                     </form>
                                 </div>
@@ -108,7 +126,7 @@
                     </div>
                 </section>
 
-                <section class="about-sec section col-sm-4" id="about">
+                <section class="about-sec section settings-section col-sm-4" id="about">
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-12">
@@ -124,9 +142,9 @@
                                     <% } %>
                                     <form action="/contact" method="post">
                                         <input type="text" placeholder="Enter your New Mobile Number" name="mobileno"
-                                            required class="form-input" /><br><br>
+                                            required class="form-input" style="width: 100%; max-width: 450px;" /><br><br>
                                         <input type="submit" value="Update Contact Number" class="sec-btn"
-                                            style="color: white; background: orange;"
+                                            style="color: white; background: orange; width: 100%; max-width: 450px;"
                                             onmouseover="this.style.boxShadow='inset 9px 9px 12px orange, inset -9px -9px 12px rgb(238, 180, 73);'" /><br>
                                     </form>
                                 </div>
@@ -135,7 +153,7 @@
                     </div>
                 </section>
 
-                <section class="about-sec section col-sm-4" id="about">
+                <section class="about-sec section settings-section col-sm-4" id="about">
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-12">
@@ -151,15 +169,15 @@
                                     <% } %>
                                     <form action="/password" method="post">
                                         <input type="password" placeholder="Old Password" required class="form-input"
-                                            name="old_password" id="InputOldPassword" /><br><br>
+                                            name="old_password" id="InputOldPassword" style="width: 100%; max-width: 450px;" /><br><br>
                                         <input type="password" placeholder="New Password" required class="form-input"
                                             name="new_password" id="InputPassword" pattern=".{6,}"
-                                            title="Minimum 6 character" /><br><br>
+                                            title="Minimum 6 character" style="width: 100%; max-width: 450px;" /><br><br>
                                         <input type="password" placeholder="Confirm Password" required
                                             class="form-input" name="confirmPassword" id="ConfirmInputPassword"
-                                            /><br><br>
+                                            style="width: 100%; max-width: 450px;" /><br><br>
                                         <input type="submit" value="Update Password" class="sec-btn"
-                                            style="color: white; background: orange;"
+                                            style="color: white; background: orange; width: 100%; max-width: 450px;"
                                             onmouseover="this.style.boxShadow='inset 9px 9px 12px orange, inset -9px -9px 12px rgb(238, 180, 73);'" /><br>
                                     </form>
                                 </div>

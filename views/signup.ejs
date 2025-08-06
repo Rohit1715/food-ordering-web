@@ -17,6 +17,18 @@
     <link rel="stylesheet" href="/stylesheets/jquery.fancybox.min.css">
     <!-- custom css  -->
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <style>
+        @media (max-width: 768px) {
+            .form-input {
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+            .sec-btn {
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+        }
+    </style>
 </head>
 
 <body class="body-fixed">
@@ -71,22 +83,22 @@
                                 </div>
                                 <form action="/signup" method="post">
                                     <input type="text" placeholder="Enter your Name" required class="form-input"
-                                        name="name" id="InputName" /><br><br>
+                                        name="name" id="InputName" style="width: 100%; max-width: 450px;" /><br><br>
                                     <input type="text" placeholder="Enter your Address" required class="form-input"
-                                        name="address" id="InputAddress" /><br><br>
+                                        name="address" id="InputAddress" style="width: 100%; max-width: 450px;" /><br><br>
                                     <input type="text" placeholder="Enter your Email ID" required class="form-input"
-                                        name="email" id="exampleInputEmail1" /><br><br>
+                                        name="email" id="exampleInputEmail1" style="width: 100%; max-width: 450px;" /><br><br>
                                     <input type="text" placeholder="Enter your Mobile number" required
                                         class="form-input" name="mobile" id="InputMobile" maxlength="10"
-                                        /><br><br>
+                                        style="width: 100%; max-width: 450px;" /><br><br>
                                     <input type="password" placeholder="Enter your Password" required class="form-input"
                                         name="password" id="InputPassword" pattern=".{6,}" title="Minimum 6 character"
-                                        /><br><br>
+                                        style="width: 100%; max-width: 450px;" /><br><br>
                                     <input type="password" placeholder="Re-Enter your Password" required
                                         class="form-input" name="confirmPassword" id="ConfirmInputPassword"
-                                        style="width: 450px;" /><br><br>
+                                        style="width: 100%; max-width: 450px;" /><br><br>
                                     <input type="submit" value="Sign Up" class="sec-btn"
-                                        style="color: white; background: orange" /><br>
+                                        style="color: white; background: orange; width: 100%; max-width: 450px;" /><br>
                                 </form>
                                 <br>
                                 <i class="text-capitalize" style="font-size: 20px;">Already Registred <span

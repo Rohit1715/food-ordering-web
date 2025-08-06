@@ -17,6 +17,18 @@
     <link rel="stylesheet" href="/stylesheets/jquery.fancybox.min.css">
     <!-- custom css  -->
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <style>
+        @media (max-width: 768px) {
+            .form-input {
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+            .sec-btn {
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+        }
+    </style>
 </head>
 
 <body class="body-fixed">
@@ -78,7 +90,7 @@
                                 <% } %>
                                 <form action="/admin_change_price" method="post" enctype="multipart/form-data">
                                     <label for="foods_price">
-                                        <select name="item_name" id="item_name" class="form-input">
+                                        <select name="item_name" id="item_name" class="form-input" style="width: 100%; max-width: 550px;">
                                             <option value="None">Select Food</option>
                                             <% let size=items.length; %>
                                                 <% for(let i=0;i<size;i++) { %>
@@ -90,9 +102,9 @@
                                     </label>
                                     <br><br>
                                     <input type="text" placeholder="Enter Food New Price" required class="form-input"
-                                        name="NewFoodPrice" id="NewFoodPrice" /><br><br>
+                                        name="NewFoodPrice" id="NewFoodPrice" style="width: 100%; max-width: 550px;" /><br><br>
                                     <input type="submit" value="Update Price" class="sec-btn"
-                                        style="color: white; background: orange" /><br>
+                                        style="color: white; background: orange; width: 100%; max-width: 550px;" /><br>
                                 </form>
                             </div>
                         </div>

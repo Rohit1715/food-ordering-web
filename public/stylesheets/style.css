@@ -166,9 +166,6 @@ button {
     display: none;
     position: absolute;
     min-width: 150px;
-    max-width: 250px;
-    left: 0;
-    right: auto;
     overflow: auto;
     font-size: 14px;
     background: linear-gradient(145deg, #dcdcdc, #ffffff);
@@ -562,6 +559,27 @@ input * {
     .container-fluid {
         padding: 0 30px;
     }
+    
+    .header-right {
+        margin-right: 60px;
+    }
+    
+    .header-btn {
+        margin-right: 50px;
+    }
+    
+    .header-username {
+        max-width: 80px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    
+    .dropdown-content {
+        right: 0;
+        left: auto;
+        min-width: 120px;
+    }
 }
 
 @media (max-width: 400px) {
@@ -581,6 +599,15 @@ input * {
 
     .site-header .container .row .col-lg-2 {
         left: 15px;
+    }
+    
+    .header-right {
+        margin-right: 50px;
+    }
+    
+    .header-username {
+        max-width: 60px;
+        font-size: 12px;
     }
 }
 
@@ -1724,47 +1751,5 @@ p {
 
     .team-img {
         height: 280px;
-    }
-}
-
-@media (max-width: 600px) {
-    .dropdown-content {
-        min-width: 90vw !important;
-        max-width: 95vw !important;
-        left: 5vw !important;
-        right: auto !important;
-        font-size: 16px;
-        text-align: left;
-        box-sizing: border-box;
-    }
-    .dropdown-content a {
-        padding: 16px 20px;
-        font-size: 18px;
-    }
-    input[type="text"],
-    input[type="email"],
-    input[type="password"],
-    input[type="number"],
-    input[type="tel"],
-    select,
-    textarea {
-        width: 100% !important;
-        min-width: 0 !important;
-        box-sizing: border-box;
-        font-size: 16px;
-        margin-bottom: 16px;
-        padding: 12px 10px;
-    }
-    button,
-    .sec-btn,
-    input[type="submit"] {
-        width: 100% !important;
-        min-width: 0 !important;
-        margin-bottom: 16px;
-        font-size: 18px;
-        padding: 12px 0;
-    }
-    form {
-        padding: 0 2vw;
     }
 }

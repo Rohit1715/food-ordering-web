@@ -30,17 +30,7 @@
             width: 100%;
             overflow-x: auto;
         }
-        .details-center-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            margin-bottom: 30px;
-        }
         @media (max-width: 600px) {
-            .details-center-wrapper {
-                justify-content: flex-start;
-            }
             #mycart th, #mycart td, .table-responsive-mobile table th, .table-responsive-mobile table td {
                 font-size: 14px;
                 padding: 6px 4px;
@@ -124,7 +114,7 @@
                                 <div class="sec-title-shape mb-4">
                                     <img src="/images/title-shape.svg" alt="">
                                 </div>
-                                <div class="details-center-wrapper">
+                                <div id="myDetails" style="margin-bottom: 30px;">
                                     <div class="table-responsive-mobile">
                                         <table>
                                             <thead>
