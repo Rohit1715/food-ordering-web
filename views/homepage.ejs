@@ -588,25 +588,25 @@
                 }
             }
         });
-        // Hide dropdown if clicking outside
-        document.addEventListener('mousedown', function(e){
+     // Hide dropdown if clicking outside
+        document.addEventListener('mousedown', function(e) {
             if (!dropdown.contains(e.target) && e.target !== searchInput) {
                 dropdown.style.display = 'none';
             }
         });
-        
+
         // Cart count synchronization
-        const serverCartCount = <%= item_count || 0 %>;
+        const serverCartCount = Number('<%= typeof item_count !== "undefined" ? item_count : 0 %>');
         const countElement = document.getElementById('cart-number-count');
         if (countElement) {
             countElement.textContent = serverCartCount;
         }
-        
+
         // Clear localStorage if server cart is empty
         if (serverCartCount === 0) {
             localStorage.removeItem('cart');
         }
-        
+
         // Force clear old cart data if there's a mismatch
         const localCart = localStorage.getItem('cart');
         if (localCart && serverCartCount === 0) {

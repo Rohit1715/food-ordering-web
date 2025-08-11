@@ -40,7 +40,42 @@
         a {
             color: white;
         }
-    </style>
+    </style><style>
+    table,
+    th,
+    tr,
+    td {
+        border: 2px solid black;
+        padding: 8px 10px;
+        border-radius: 20px;
+    }
+    .table-responsive-mobile {
+        width: 100%;
+        overflow-x: auto;
+    }
+    @media (max-width: 600px) {
+        #mycart th, #mycart td, .table-responsive-mobile table th, .table-responsive-mobile table td {
+            font-size: 14px;
+            padding: 6px 4px;
+        }
+    }
+
+    /* Desktop-only centering for My Details table */
+    @media (min-width: 992px) {
+        #myDetails .table-responsive-mobile {
+            display: flex;
+            justify-content: center;
+        }
+        #myDetails table {
+            margin: 0 auto;
+        }
+    }
+
+    a {
+        color: white;
+    }
+</style>
+
 </head>
 
 <body class="body-fixed">

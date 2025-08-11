@@ -18,23 +18,40 @@
     <!-- custom css  -->
     <link rel="stylesheet" href="/stylesheets/style.css">
     <style>
-        @media (max-width: 768px) {
-            .settings-container {
-                flex-direction: column !important;
-            }
-            .settings-section {
-                width: 100% !important;
-                margin-bottom: 30px;
-            }
-            .form-input {
-                width: 100% !important;
-                max-width: 100% !important;
-            }
-            .sec-btn {
-                width: 100% !important;
-            }
-        }
+       @media (max-width: 768px) {
+    .settings-container {
+        flex-direction: column !important;
+        overflow-y: auto !important;  /* Enable vertical scroll */
+        max-height: 100vh !important; /* Prevent overflow beyond screen */
+        padding-bottom: 20px;         /* Space for last element */
+    }
+    .settings-section {
+        width: 100% !important;
+        margin-bottom: 30px;
+    }
+    .form-input {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    .sec-btn {
+        width: 100% !important;
+    }
+    /* Added improvements for better mobile alignment */
+    .profile-card {
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+    }
+    .profile-card img {
+        margin-bottom: 15px;
+    }
+    .profile-details {
+        width: 100% !important;
+    }
+}
+
     </style>
+    
 </head>
 
 <body class="body-fixed">
